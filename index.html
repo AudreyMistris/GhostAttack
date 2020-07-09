@@ -25,48 +25,12 @@
             margin-left: auto;
             margin-right: auto;
             image-rendering: pixelated;
-            /* cursor: pointer; */
         }
-
-        /* button {
-            background-color: darkcyan;
-            border: none;
-            border-radius: 3px;
-            color: #000000;
-            padding: 2px 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            cursor: pointer;
-            font-weight: bold;
-            position: fixed;
-        } */
-
-        /* .footer {
-            position: fixed;
-            text-align: center;
-            bottom: 0px;
-            width: 100%;
-            color: white;
-            font-weight: bold;
-            font-family:'Courier New', Courier, monospace;
-        } */
     </style>
 </head>
 
 <body>
     <canvas id="jogo" width="700" height="280"></canvas>
-    <!-- <div class="footer">Instruções: Clicar no canvas para atacar.</div> -->
-
-    <!-- <button id="atirar">Atacar</button>
-
-    <script>
-        let botaoEl = document.querySelector('#atirar');
-        botaoEl.addEventListener('click', function(e) {
-            alert('Atacou na posição x = ' + e.offsetX + '!!!');
-            // Desenhar quadrado na posição atacada aqui
-        });
-    </script> -->
 
     <script>
         document.body.style.backgroundColor = "black";
@@ -83,9 +47,7 @@
             desenha(ctx) {
                 if (this.imagem) {
                     ctx.drawImage(this.imagem, this.x, this.y, this.largura, this.altura);
-                } /* else { //tem que colocar isso ainda?
-                    ctx.strokeRect(this.x, this.y, this.largura, this.altura);
-                } */
+                }
             }
         }
 
@@ -109,19 +71,13 @@
         let imageInimigo = new Image();
         imageInimigo.src = 'off_ghost.gif';
 
-        /* imageSprite.onload = () => {
-            ctx.drawImage(imageSprite, 50, 50);
-        }; */
-
         let katana = new Sprite(50, 170, 108, 108, imageSprite);
         let inimigos = [];
-
         inimigos.push(new Sprite(350, 20, 194, 136, imageInimigo));
         inimigos.push(new Sprite(480, 160, 194, 136, imageInimigo));
         inimigos.push(new Sprite(520, 50, 194, 136, imageInimigo));
 
         imageSprite.addEventListener('load', (evento) => {
-            // ctx.drawImage(imageSprite, x, y, 80, 90);
             desenhaJogo();
         });
 
@@ -129,17 +85,8 @@
             // alert('x = ' + evento.offsetX);
             katana.x = evento.offsetX - katana.largura / 2;
             katana.y = evento.offsetY - katana.altura / 2;
-            // ctx.clearRect(0, 0, 700, 280);
-            // ctx.drawImage(imageSprite, x, y, 80, 90);
             desenhaJogo();
         });
-
-        /* canvasEl.addEventListener('click', (evento) => {
-            // alert('Atacou na posição x = ' + evento.offsetX + '!!!');
-            ctx.strokeStyle = 'red';
-            ctx.fillStyle = 'red';
-            ctx.fillRect(Math.random() * 700, Math.random() * 280, 10, 10);
-        }); */
 
         function desenhaJogo() {
             ctx.clearRect(0, 0, 700, 280);
