@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cenário animado com sprites">
+
+    <link rel="shortcut icon" href="katanagirl.gif">
+    <title>Katana VS Ghosts</title>
+
+    <style>
+        body {
+            background-image: url(jungle.gif);
+            background-size: 700px 340px;
+            background-repeat: no-repeat;
+            background-position: bottom center;
+        }
+
+        canvas {
+            border: 1px solid black;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            image-rendering: pixelated;
+            /* cursor: pointer; */
+        }
+
+        /* button {
+            background-color: darkcyan;
+            border: none;
+            border-radius: 3px;
+            color: #000000;
+            padding: 2px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            font-weight: bold;
+            position: fixed;
+        } */
+
+        /* .footer {
+            position: fixed;
+            text-align: center;
+            bottom: 0px;
+            width: 100%;
+            color: white;
+            font-weight: bold;
+            font-family:'Courier New', Courier, monospace;
+        } */
+    </style>
+</head>
+
+<body>
+    <canvas id="jogo" width="700" height="280"></canvas>
+    <!-- <div class="footer">Instruções: Clicar no canvas para atacar.</div> -->
+
+    <!-- <button id="atirar">Atacar</button>
+
+    <script>
+        let botaoEl = document.querySelector('#atirar');
+        botaoEl.addEventListener('click', function(e) {
+            alert('Atacou na posição x = ' + e.offsetX + '!!!');
+            // Desenhar quadrado na posição atacada aqui
+        });
+    </script> -->
+
+    <script>
+        document.body.style.backgroundColor = "black";
+
+        class Sprite {
+            constructor(x, y, largura, altura, imagem) {
+                this.x = x;
+                this.y = y;
+                this.largura = largura;
+                this.altura = altura;
+                this.imagem = imagem;
+            }
+
+            desenha(ctx) {
+                if (this.imagem) {
+                    ctx.drawImage(this.imagem, this.x, this.y, this.largura, this.altura);
+                } /* else { //tem que colocar isso ainda?
+                    ctx.strokeRect(this.x, this.y, this.largura, this.altura);
+                } */
+            }
+        }
+
+        class Inimigo {
+            constructor(x, y, largura, altura, imagem) {
+                this.x = x;
+                this.y = y;
+                this.largura = largura;
+                this.altura = altura;
+                this.imagem = imagem;
+            }
+        }
+
+        let canvasEl = document.querySelector('#jogo');
+        let ctx = canvasEl.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+
+        let imageSprite = new Image();
+        imageSprite.src = 'katanagirl.gif';
+
+        let imageInimigo = new Image();
+        imageInimigo.src = 'off_ghost.gif';
+
+        /* imageSprite.onload = () => {
+            ctx.drawImage(imageSprite, 50, 50);
+        }; */
+
+        let katana = new Sprite(50, 170, 108, 108, imageSprite);
+        let inimigos = [];
+
+        inimigos.push(new Sprite(350, 20, 194, 136, imageInimigo));
+        inimigos.push(new Sprite(480, 160, 194, 136, imageInimigo));
+        inimigos.push(new Sprite(520, 50, 194, 136, imageInimigo));
+
+        imageSprite.addEventListener('load', (evento) => {
+            // ctx.drawImage(imageSprite, x, y, 80, 90);
+            desenhaJogo();
+        });
+
+        canvasEl.addEventListener('mousemove', (evento) => {
+            // alert('x = ' + evento.offsetX);
+            katana.x = evento.offsetX - katana.largura / 2;
+            katana.y = evento.offsetY - katana.altura / 2;
+            // ctx.clearRect(0, 0, 700, 280);
+            // ctx.drawImage(imageSprite, x, y, 80, 90);
+            desenhaJogo();
+        });
+
+        /* canvasEl.addEventListener('click', (evento) => {
+            // alert('Atacou na posição x = ' + evento.offsetX + '!!!');
+            ctx.strokeStyle = 'red';
+            ctx.fillStyle = 'red';
+            ctx.fillRect(Math.random() * 700, Math.random() * 280, 10, 10);
+        }); */
+
+        function desenhaJogo() {
+            ctx.clearRect(0, 0, 700, 280);
+            katana.desenha(ctx);
+
+            for (let inimigo of inimigos) {
+                inimigo.desenha(ctx);
+            }
+
+            // inimigos.forEach(inimigo => inimigo.desenha(ctx));
+        }
+
+    </script>
+</body>
+
+</html>
